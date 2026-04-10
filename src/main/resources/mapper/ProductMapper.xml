@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="bts.product.product_service.mapper.ProductMapper">
+    <insert parameterType="bts.product.product_service.model.dto.ProductRequest" id="createProduct">
+        INSERT INTO
+            products
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            title,
+            category,
+            price,
+            image,
+            description,
+            created_by,
+            created_at,
+            created_by_id
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            #{title},
+            #{category},
+            #{price},
+            #{image},
+            #{description},
+            #{createdBy},
+            NOW(),
+            #{createdById}
+        </trim>
+    </insert>
+
+    <delete id="deleteProduct">
+        DELETE FROM products WHERE id = #{id}
+    </delete>
+
+    <select id="getProductById" resultType="bts.product.product_service.model.entity.Product">
+        SELECT
+            id,
+            title,
+            price,
+            description,
+            category,
+            images,
+            createdAt,
+            createdBy,
+            createdById,
+            updatedAt,
+            updatedBy,
+            updatedById
+        FROM
+            products
+        WHERE id = #{id}
+    </select>
+
+    <select id="browseProduct" resultType="bts.product.product_service.model.entity.Product">
+        SELECT
+            id,
+            title,
+            price,
+            description,
+            category,
+            images,
+            createdAt,
+            createdBy,
+            createdById,
+            updatedAt,
+            updatedBy,
+            updatedById
+        FROM
+            products
+        WHERE
+            <include refid="filterBrowseProduct"/>
+        ORDER BY
+        <choose>
+            <when test="sortField.equalsIgnoreCase('title')"> title </when>
+            <when test="sortField.equalsIgnoreCase('price')"> price </when>
+            <when test="sortField.equalsIgnoreCase('description')"> description </when>
+            <when test="sortField.equalsIgnoreCase('category')"> category </when>
+            <otherwise> title </otherwise>
+        </choose>
+        <choose>
+            <when test="sortOrder.equalsIgnoreCase('ASC')"> ASC </when>
+            <otherwise> DESC </otherwise>
+        </choose>
+        OFFSET #{offset} ROWS FETCH NEXT #{limit} ROWS ONLY
+    </select>
+
+    <select id="countProduct" resultType="int">
+        SELECT
+            COUNT(1)
+        FROM
+         products
+        WHERE
+            <include refid="filterBrowseProduct"/>
+    </select>
+
+    <sql id="filterBrowseProduct">
+        <if test="search != null and search != ''">
+            title ILIKE '%' || #{search} || '%'
+        </if>
+        <if test="category != null and category != ''">
+            AND category ILIKE '%' || #{category} || '%'
+        </if>
+    </sql>
+
+    <update id="updateProduct" parameterType="bts.product.product_service.model.dto.ProductUpdateRequest">
+        UPDATE products
+        <set>
+            <if test="title != null">title = #{title},</if>
+            <if test="category != null">category = #{category},</if>
+            <if test="price != null">price = #{price},</if>
+            <if test="image != null">image = #{image},</if>
+            <if test="description != null">description = #{description},</if>
+            updated_by = #{updatedBy},
+            updated_at = NOW(),
+            updated_by_id = #{updatedById}
+        </set>
+        WHERE id = #{id}
+    </update>
+</mapper>

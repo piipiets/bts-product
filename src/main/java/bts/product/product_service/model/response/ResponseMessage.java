@@ -1,0 +1,16 @@
+package bts.product.product_service.model.response;
+
+import lombok.Getter;
+
+@Getter
+public final class ResponseMessage {
+    private ResponseMessage() {
+        throw new UnsupportedOperationException("This is a constant class and cannot be instantiated");
+    }
+    public static final String DATA_CREATED = "Data successfully created.";
+    public static final String DATA_UPDATED = "Data successfully modified.";
+    public static final String DATA_FETCHED = "Data(s) successfully fetched.";
+    public static final String DATA_DELETED = "Data successfully deleted.";
+    public static final String DATA_NOT_FOUND = "Data not found.";
+    public static final String DATA_INVALID = "Some of parameter(s) are invalid.";
+}

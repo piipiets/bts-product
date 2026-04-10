@@ -1,6 +1,8 @@
 package bts.product.product_service.exception;
 
 import bts.product.product_service.exception.custom.NotFoundException;
+import bts.product.product_service.exception.custom.UnauthorizedException;
+import bts.product.product_service.model.response.DefaultResponse;
 import bts.product.product_service.model.response.ErrorResponse;
 import bts.product.product_service.model.response.ResponseMessage;
 import org.springframework.http.HttpHeaders;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,6 +42,13 @@ public class ApiExceptionHandler {
 
         HttpStatus status = HttpStatus.BAD_REQUEST;
         ErrorResponse response = new ErrorResponse(ERROR, ResponseMessage.DATA_INVALID, status.value(), errors);
+        return new ResponseEntity<>(response, new HttpHeaders(), status);
+    }
+
+    @ExceptionHandler(value = UnauthorizedException.class)
+    public ResponseEntity<DefaultResponse> handleUnauthorizedException(UnauthorizedException e) {
+        HttpStatus status = HttpStatus.UNAUTHORIZED;
+        DefaultResponse response = new DefaultResponse(ERROR, e.getMessage(), new Date(), status.value());
         return new ResponseEntity<>(response, new HttpHeaders(), status);
     }
 

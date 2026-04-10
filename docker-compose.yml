@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+
+  app:
+    image: product-service:1.0
+    ports:
+      - "8080:8080"
+    environment:
+      DATASOURCE_URL: jdbc:postgresql://db:5432/product
+      DATASOURCE_USERNAME: postgres
+      DATASOURCE_PASSWORD: admin
+      KEYCLOAK_SERVER: http://keycloak:8080
+      KEYCLOAK_REALM: ecommerce-microservices-realm
+      KEYCLOAK_ISSUER_URI: http://keycloak:8080/realms/ecommerce-microservices-realm
+    depends_on:
+      - db
+      - keycloak
+
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: product
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin
+    volumes:
+      - ./product-dump.sql:/docker-entrypoint-initdb.d/product-dump.sql
+    ports:
+      - "5432:5432"
+
+  keycloak:
+    image: quay.io/keycloak/keycloak
+    command: start-dev --import-realm
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: password
+    volumes:
+      - ./realm-export.json:/opt/keycloak/data/import/realm-export.json
+    ports:
+      - "8181:8080"

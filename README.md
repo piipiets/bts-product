@@ -7,22 +7,38 @@ This service is developed using **Java Spring Boot** and **PostgreSQL**.
 
 ---
 
-## 🗄️ Database Schema
+## Tech Stack
 
-Below is the DDL for the `products` table:
+- Java 8
+- Spring Boot
+- PostgreSQL 
+- Keycloak
+- Docker & Docker Compose
+- Maven
 
-```sql
-CREATE TABLE public.products (
-    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    title VARCHAR(255) NOT NULL,
-    price NUMERIC(10, 2) NOT NULL,
-    description TEXT,
-    category VARCHAR(100),
-    images TEXT[],
-    created_at TIMESTAMP,
-    created_by VARCHAR(100),
-    created_by_id BIGINT,
-    updated_at TIMESTAMP,
-    updated_by VARCHAR(100),
-    updated_by_id BIGINT
-);
+---
+
+## How to Run (Docker)
+### 1. Clone the repository
+```bash
+git clone https://github.com/your-repo/product-service.git
+cd product-service
+docker compose down -v
+docker compose up --build
+```
+
+### Services
+- Service	URL : Application	http://localhost:8080
+- PostgreSQL	: localhost:5432
+- Keycloak	: http://localhost:8181
+
+### Get Access Token
+```bash
+curl --location 'http://localhost:8080/api/auth/login' \
+--header 'Content-Type: application/json' \
+--header 'Cookie: JSESSIONID=FB8B3C5135D81BC98FD16E5AAFB0A92E' \
+--data '{
+    "username": "user",
+    "password": "123456"
+}'
+```

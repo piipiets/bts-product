@@ -14,6 +14,7 @@ services:
       KEYCLOAK_SERVER: http://keycloak:8080
       KEYCLOAK_REALM: ecommerce-microservices-realm
       KEYCLOAK_ISSUER_URI: http://keycloak:8080/realms/ecommerce-microservices-realm
+      KEYCLOAK_CLIENT_ID: ecommerce-client
     depends_on:
       - db
       - keycloak

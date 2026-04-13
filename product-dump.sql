@@ -30,13 +30,13 @@ CREATE TABLE public.products (
     price numeric(10,2) NOT NULL,
     description text,
     category character varying(100),
-    images text[],
+    images character varying(255),
     created_at timestamp without time zone,
     created_by character varying(100),
-    created_by_id bigint,
+    created_by_id character varying(100),
     updated_at timestamp without time zone,
     updated_by character varying(100),
-    updated_by_id bigint
+    updated_by_id character varying(100)
 );
 
 

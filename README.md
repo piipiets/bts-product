@@ -23,7 +23,7 @@ This service is developed using **Java Spring Boot** and **PostgreSQL**.
 ```bash
 git clone https://github.com/piipiets/bts-product
 cd bts-product
-docker compose down -v
+mvn clean package -DskipTests
 docker compose up --build
 ```
 

@@ -21,8 +21,8 @@ This service is developed using **Java Spring Boot** and **PostgreSQL**.
 ## How to Run (Docker)
 ### 1. Clone the repository
 ```bash
-git clone https://github.com/your-repo/product-service.git
-cd product-service
+git clone https://github.com/piipiets/bts-product
+cd bts-product
 docker compose down -v
 docker compose up --build
 ```

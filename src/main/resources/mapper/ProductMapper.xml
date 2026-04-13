@@ -8,7 +8,7 @@
             title,
             category,
             price,
-            image,
+            images,
             description,
             created_by,
             created_at,
@@ -39,12 +39,12 @@
             description,
             category,
             images,
-            createdAt,
-            createdBy,
-            createdById,
-            updatedAt,
-            updatedBy,
-            updatedById
+            created_at,
+            created_by,
+            created_by_id,
+            updated_at,
+            updated_by,
+            updated_by_id
         FROM
             products
         WHERE id = #{id}
@@ -58,12 +58,12 @@
             description,
             category,
             images,
-            createdAt,
-            createdBy,
-            createdById,
-            updatedAt,
-            updatedBy,
-            updatedById
+            created_at,
+            created_by,
+            created_by_id,
+            updated_at,
+            updated_by,
+            updated_by_id
         FROM
             products
         WHERE
@@ -93,8 +93,9 @@
     </select>
 
     <sql id="filterBrowseProduct">
+        1=1
         <if test="search != null and search != ''">
-            title ILIKE '%' || #{search} || '%'
+            AND title ILIKE '%' || #{search} || '%'
         </if>
         <if test="category != null and category != ''">
             AND category ILIKE '%' || #{category} || '%'
@@ -104,14 +105,14 @@
     <update id="updateProduct" parameterType="bts.product.product_service.model.dto.ProductUpdateRequest">
         UPDATE products
         <set>
-            <if test="title != null">title = #{title},</if>
-            <if test="category != null">category = #{category},</if>
-            <if test="price != null">price = #{price},</if>
-            <if test="image != null">image = #{image},</if>
-            <if test="description != null">description = #{description},</if>
-            updated_by = #{updatedBy},
+            <if test="productRequest.title != null">title = #{productRequest.title},</if>
+            <if test="productRequest.category != null">category = #{productRequest.category},</if>
+            <if test="productRequest.price != null">price = #{productRequest.price},</if>
+            <if test="productRequest.image != null">images = #{productRequest.image},</if>
+            <if test="productRequest.description != null">description = #{productRequest.description},</if>
+            updated_by = #{productRequest.updatedBy},
             updated_at = NOW(),
-            updated_by_id = #{updatedById}
+            updated_by_id = #{productRequest.updatedById}
         </set>
         WHERE id = #{id}
     </update>

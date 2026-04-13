@@ -15,7 +15,9 @@ public class ProductUpdateRequest {
     private BigDecimal price;
     private String image;
     private String description;
+    @NotEmpty(message = "UpdatedBy must be filled")
     private String updatedBy;
+    @NotEmpty(message = "UpdatedById must be filled")
     private String updatedById;
 
 }

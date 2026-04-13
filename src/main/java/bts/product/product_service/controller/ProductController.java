@@ -1,6 +1,7 @@
 package bts.product.product_service.controller;
 
 import bts.product.product_service.model.dto.ProductRequest;
+import bts.product.product_service.model.dto.ProductUpdateRequest;
 import bts.product.product_service.model.entity.Product;
 import bts.product.product_service.model.response.DataResponse;
 import bts.product.product_service.model.response.DatatableResponse;
@@ -54,7 +55,7 @@ public class ProductController {
     @PutMapping(path = "/products/{id}")
     public ResponseEntity<DefaultResponse> updateProduct(
             @PathVariable int id,
-            @RequestBody ProductRequest productRequest) {
+            @Valid @RequestBody ProductUpdateRequest productRequest) {
         DefaultResponse res = productService.updateProduct(id, productRequest);
         return ResponseEntity.ok().body(res);
     }

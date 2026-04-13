@@ -3,6 +3,7 @@ package bts.product.product_service.service;
 import bts.product.product_service.exception.custom.NotFoundException;
 import bts.product.product_service.mapper.ProductMapper;
 import bts.product.product_service.model.dto.ProductRequest;
+import bts.product.product_service.model.dto.ProductUpdateRequest;
 import bts.product.product_service.model.entity.Product;
 import bts.product.product_service.model.response.*;
 import lombok.RequiredArgsConstructor;
@@ -73,7 +74,7 @@ public class ProductService {
         }
     }
 
-    public DefaultResponse updateProduct(int id, ProductRequest productRequest){
+    public DefaultResponse updateProduct(int id, ProductUpdateRequest productRequest){
         try{
             productMapper.updateProduct(id, productRequest);
             return new DefaultResponse(ResponseMessage.DATA_UPDATED, 200);

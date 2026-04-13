@@ -1,6 +1,7 @@
 package bts.product.product_service.mapper;
 
 import bts.product.product_service.model.dto.ProductRequest;
+import bts.product.product_service.model.dto.ProductUpdateRequest;
 import bts.product.product_service.model.entity.Product;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -14,5 +15,5 @@ public interface ProductMapper {
                                 String search, String category);
     int countProduct(String search, String category);
     void deleteProduct(int id);
-    void updateProduct(int id, ProductRequest productRequest);
+    void updateProduct(int id, ProductUpdateRequest productRequest);
 }
